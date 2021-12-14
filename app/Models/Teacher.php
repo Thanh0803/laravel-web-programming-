@@ -9,11 +9,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
-class Admin extends Authenticatable
+class Teacher extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
     protected $fillable = [
-        'account_id',
+        'account_id', 'teacher_id'
     ];
     public function account()
     {
@@ -22,5 +22,9 @@ class Admin extends Authenticatable
     public function OauthAcessToken()
     {
         return $this->hasMany('App\Models\OauthAccessToken','user_id','id');
+    }
+    public function lop()
+    {
+        return $this->hasOne('App\Models\Lop');
     }
 }

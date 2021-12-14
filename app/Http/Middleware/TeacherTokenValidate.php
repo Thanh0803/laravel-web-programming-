@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class UserTokenValidate
+class TeacherTokenValidate
 {
     /**
      * Handle an incoming request.
@@ -15,7 +15,7 @@ class UserTokenValidate
      */
     public function handle($request, Closure $next)
     {
-        if (!$request->user()->tokenCan('user')) {
+        if (!$request->user()->tokenCan('teacher')) {
             return response()->json([
                 'message' => "Unauthenticated",
                 //'message' => "Unauthenticated",

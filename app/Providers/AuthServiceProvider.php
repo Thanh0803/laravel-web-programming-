@@ -28,8 +28,9 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Passport::tokensCan([
-            'user' => 'The place only users can access.',
+            'teacher' => 'The place only teachers can access.',
             'admin' => 'The place only admins can access',
+            'student' => 'The place only students can access',
         ]);
 
         Passport::routes();

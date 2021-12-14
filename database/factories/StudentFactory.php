@@ -15,8 +15,7 @@ class StudentFactory extends Factory
     public function definition()
     {
         return [
-            'information_id' => 2 ,
-            'lop_id' => 2,
+            'account_id' => 2 ,
         ];
     }
 

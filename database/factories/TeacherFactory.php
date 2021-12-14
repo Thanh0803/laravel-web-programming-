@@ -5,7 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-class UserFactory extends Factory
+class TeacherFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -15,8 +15,7 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'information_id' =>  1,
-            'level_id' => 1,
+            'account_id' =>  3,
         ];
     }
 

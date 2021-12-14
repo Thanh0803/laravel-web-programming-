@@ -15,11 +15,13 @@ class CreateLopsTable extends Migration
     {
         Schema::create('lops', function (Blueprint $table) {
             $table->id();
-            $table->string('className')->unique();
-            // $table->unsignedBigInteger('headTeacher');
-            // $table->foreign('headTeacher')->references('id')->on('users');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('teacher_id');
+            $table->foreign('teacher_id')->references('id')->on('teachers'); //headTeacher_id
+            $table->string('className')->nullable();
+            $table->string('academicYear')->nullable();
+            $table->string('schoolYear')->nullable();
+            $table->unsignedBigInteger('grade_id');
+            $table->foreign('grade_id')->references('id')->on('grades');
             $table->timestamps();
         });
     }

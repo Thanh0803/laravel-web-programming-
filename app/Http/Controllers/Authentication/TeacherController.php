@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Authentication;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
-use App\Models\Information;
+use App\Models\Teacher;
+use App\Models\Account;
 
-class UserController extends Controller
+class TeacherController extends Controller
 {
     //
 
@@ -16,22 +16,22 @@ class UserController extends Controller
         {
             //VALIDATION HERE
 
-            $info = Information::create([
+            $info = Account::create([
                 'username'=>$request->username,
                 'email'=>$request->email,
                 'password'=>bcrypt($request->password),
                 'role' => 1
             ]);
             if($info->id){
-                $user = User::create([
-                    'information_id' => $info->id,
+                $teacher = Teacher::create([
+                    'account_id' => $info->id,
                 ]);
             }
             
             //REGISTER NEW USER BY RECORDING NAME, PHONE
             return response()->json([
                 'status_code'=>200,
-                'message'=>'User registered successfully.',
+                'message'=>'Teacher registered successfully.',
                 'data'=>[
 
                 ]
@@ -42,12 +42,12 @@ class UserController extends Controller
         {
             //VALIDATE PHONE NUMBER
 
-            $info = Information::where('username',$request->username)->first();
+            $info = Account::where('username',$request->username)->first();
 
             if(!$info){
                 return response()->json([
                     'status_code'=>404  ,
-                    'message'=>'User does not exist.',
+                    'message'=>'Teacher does not exist.',
                     'data'=>[
 
                     ]
@@ -63,26 +63,26 @@ class UserController extends Controller
                     ]
                 ]);
             }
-            $user = User::where('information_id',$info->id)->first();
-            if(!$user){
+            $teacher = Teacher::where('account_id',$info->id)->first();
+            if(!$teacher){
                 return response()->json([
                     'status_code'=>404  ,
-                    'message'=>'User does not exist.',
+                    'message'=>'Teacher does not exist.',
                     'data'=> [
 
                     ]
                 ]);
             }
-            $user->OauthAcessToken()->where('name','user')->delete();
-            $access_token = $user->createToken('user',['user'])->accessToken;
+            $teacher->OauthAcessToken()->where('name','teacher')->delete();
+            $access_token = $teacher->createToken('teacher',['teacher'])->accessToken;
             //LOGIN
             
             //RETURN DATA WITH access_TOKEN
             return response()->json([
                 'status_code'=>200 ,
-                'message'=>'User has successfully logged in OTP.',
+                'message'=>'Teacher has successfully logged in OTP.',
                 'data'=>[
-                    'user'=>$user,
+                    'teacher'=>new TeacherResource($teacher),
                     'access_token'=>$access_token
                 ]
             ]);
@@ -90,7 +90,7 @@ class UserController extends Controller
 
         public function logout(Request $request)
         {
-            $request->user()->OauthAcessToken()->where('name','user')->delete();
+            $request->user()->OauthAcessToken()->where('name','teacher')->delete();
 
             return response()->json([
                 'status_code'=>200 ,

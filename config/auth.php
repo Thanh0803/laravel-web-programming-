@@ -40,14 +40,19 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'user' => [
+        'teacher' => [
             'driver' => 'passport',
-            'provider' => 'users',
+            'provider' => 'teachers',
         ],
 
         'admin' => [
             'driver' => 'passport',
             'provider' => 'admins',
+        ],
+
+        'student' => [
+            'driver' => 'passport',
+            'provider' => 'students',
         ],
     ],
 
@@ -76,6 +81,14 @@ return [
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
+        ],
+        'students' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Student::class,
+        ],
+        'phuhuynhs' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Phuhuynh::class,
         ],
         // 'users' => [
         //     'driver' => 'database',

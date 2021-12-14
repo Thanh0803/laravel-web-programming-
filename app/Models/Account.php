@@ -9,18 +9,23 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
-class Admin extends Authenticatable
+class Account extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory;
     protected $fillable = [
-        'account_id',
+        'username', 'email','password', 'role', 
     ];
-    public function account()
+    public function teacher()
     {
-        return $this->belongsTo('App\Models\Account');
+        return $this->hasOne('App\Models\Teacher');
     }
-    public function OauthAcessToken()
+    public function student()
     {
-        return $this->hasMany('App\Models\OauthAccessToken','user_id','id');
+        return $this->hasOne('App\Models\Student');
+    }
+    public function admin()
+    {
+        return $this->hasOne('App\Models\Admin');
     }
 }
+

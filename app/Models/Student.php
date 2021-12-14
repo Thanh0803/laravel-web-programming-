@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -12,23 +13,18 @@ class Student extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
     protected $fillable = [
-        'information_id', 'student_id'
+        'account_id', 
     ];
-    public function lop()
+    public function account()
     {
-        return $this->belongsTo('App\Models\Lop');
-    }
-    public function information()
-    {
-        return $this->belongsTo('App\Models\Information');
-    }
-    public function phuhuynh()
-    {
-        return $this->hasMany('App\Models\Phuhuynh');
+        return $this->belongsTo('App\Models\Account');
     }
     public function OauthAcessToken()
     {
-        return $this->hasMany('App\Models\OauthAccessToken');
+        return $this->hasMany('App\Models\OauthAccessToken','user_id','id');
     }
-
+    public function divisions()
+    {
+        return $this->hasMany('App\Models\Division');
+    }
 }

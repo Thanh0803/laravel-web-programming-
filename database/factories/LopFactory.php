@@ -15,9 +15,8 @@ class LopFactory extends Factory
     {
         return [
             //
-            'className' => $this->faker->text(),
-            // 'headTeacher' => 1,
-            'user_id' => 1,
+            'grade_id' => 2,
+            'teacher_id' => 2,
         ];
     }
 }

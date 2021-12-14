@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Admin;
-use App\Models\Information;
+use App\Models\Account;
 
 class AdminController extends Controller
 {
@@ -15,18 +15,25 @@ class AdminController extends Controller
         {
             //VALIDATION HERE
 
-            $admin = Admin::create([
+            $info = Account::create([
                 'username'=>$request->username,
-                //'email'=>$request->email,
+                'email'=>$request->email,
                 'password'=>bcrypt($request->password),
+                'role' => 0
             ]);
+            if($info->id){
+                $admin = Admin::create([
+                    'account_id' => $info->id,
+                ]);
+            }
+            
             //REGISTER NEW USER BY RECORDING NAME, PHONE
             return response()->json([
                 'status_code'=>200,
                 'message'=>'Admin registered successfully.',
-                // 'data'=>[
+                'data'=>[
 
-                // ]
+                ]
             ]);
         }
 
@@ -66,6 +73,7 @@ class AdminController extends Controller
                 'message'=>'Admin has successfully logged in OTP.',
                 'data'=>[
                     'user'=>$admin,
+                    'role'=>0,
                     'access_token'=>$access_token
                 ]
             ]);

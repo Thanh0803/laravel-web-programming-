@@ -5,26 +5,25 @@ namespace App\Http\Controllers\Authentication;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
-use App\Models\Information;
+use App\Models\Student;
+use App\Models\Account;
+
 
 class StudentController extends Controller
 {
-    //
-
     public function register(Request $request)
         {
             //VALIDATION HERE
 
-            $info = Information::create([
+            $info = Account::create([
                 'username'=>$request->username,
                 'email'=>$request->email,
                 'password'=>bcrypt($request->password),
-                'role' => 2
+                'role' => 1
             ]);
             if($info->id){
-                $user = User::create([
-                    'information_id' => $info->id,
+                $student = Student::create([
+                    'account_id' => $info->id,
                 ]);
             }
             
@@ -42,7 +41,7 @@ class StudentController extends Controller
         {
             //VALIDATE PHONE NUMBER
 
-            $info = Information::where('username',$request->username)->first();
+            $info = Account::where('username',$request->username)->first();
 
             if(!$info){
                 return response()->json([
@@ -63,18 +62,18 @@ class StudentController extends Controller
                     ]
                 ]);
             }
-            $user = User::where('information_id',$info->id)->first();
-            if(!$user){
+            $student = Student::where('account_id',$info->id)->first();
+            if(!$student){
                 return response()->json([
                     'status_code'=>404  ,
-                    'message'=>'User does not exist.',
+                    'message'=>'Student does not exist.',
                     'data'=> [
 
                     ]
                 ]);
             }
-            $user->OauthAcessToken()->where('name','user')->delete();
-            $access_token = $user->createToken('user',['user'])->accessToken;
+            $student->OauthAcessToken()->where('name','student')->delete();
+            $access_token = $student->createToken('student',['student'])->accessToken;
             //LOGIN
             
             //RETURN DATA WITH access_TOKEN
@@ -82,7 +81,7 @@ class StudentController extends Controller
                 'status_code'=>200 ,
                 'message'=>'Student has successfully logged in OTP.',
                 'data'=>[
-                    'user'=>$user,
+                    'user'=>$student,
                     'access_token'=>$access_token
                 ]
             ]);
@@ -90,7 +89,7 @@ class StudentController extends Controller
 
         public function logout(Request $request)
         {
-            $request->user()->OauthAcessToken()->where('name','user')->delete();
+            $request->user()->OauthAcessToken()->where('name','student')->delete();
 
             return response()->json([
                 'status_code'=>200 ,
