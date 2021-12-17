@@ -27,4 +27,8 @@ class Teacher extends Authenticatable
     {
         return $this->hasOne('App\Models\Lop');
     }
+    public function assigns()
+    {
+        return $this->hasMany('App\Models\Assign');
+    }
 }

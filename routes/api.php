@@ -66,13 +66,20 @@ Route::middleware(['auth:admin','adminTokenValidate'])->group(function () {
     Route::delete('/admin/student/{id}','AccountManage\StudentManageController@delete');
     Route::get('/admin/student/{id}','AccountManage\StudentManageController@show');
     // Route::post('/student/delete', 'AccountManage\StudentManageController@multiDelete');
-    Route::post('/admin/student/upload/{id}','AccountManage\StudentManageController@upload');
+    Route::post('/admin/student/upload/{id}/','AccountManage\StudentManageController@upload');
 
 
-    //--------------------------------------------------------------------------Class$Grade
+    //--------------------------------------------------------------------------Class $ Grade $student
     Route::get('/admin/grade/getall/','AccountManage\ClassManageController@getAllGrade');
-    Route::get('/admin/grade/{id}/class/{lop_id}/','AccountManage\ClassManageController@getClass');
+    Route::get('/admin/grade/{id}/','AccountManage\ClassManageController@getClass'); 
     Route::get('/admin/class/in/grade/getall/{id}/','AccountManage\ClassManageController@getAllClassinGrade');
     Route::post('/admin/class/upload/{id}','AccountManage\ClassManageController@upload');
     Route::delete('/admin/class/delete/{id}','AccountManage\ClassManageController@delete');
+
+    Route::get('/admin/class/{id}/','AccountManage\ClassManageController@getAllStudent');
+
+    //--------------------------------------------------------------------------Class $ Grade $student
+    Route::get('/admin/subject/getall/','AccountManage\ClassManageController@getAllSubject');
+    Route::get('/admin/teacher/subject/getall/{id}/','AccountManage\ClassManageController@getAllTeacher'); // get all teacher in a subject
+
 });

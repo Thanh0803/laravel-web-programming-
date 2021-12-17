@@ -12,6 +12,7 @@ use App\Models\Student;
 use App\Models\Account;
 use App\Models\Teacher;
 use App\Models\Grade;
+use App\Models\Division;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -123,7 +124,7 @@ class StudentManageController extends Controller
             ], 404);
         }
     }
-    public function upload(Request $request){
+    public function upload(Request $request, int $id){
 //
         $students = $request->data;
         $count = 0;
@@ -160,6 +161,13 @@ class StudentManageController extends Controller
                     $input->motherPhone = $student['motherPhone'];
                     $input->save();
                     $input->touch();
+
+                    $division= Division::create(
+                        [
+                            'student_id' => $input->id,
+                            'lop_id' => $id,
+                        ]
+                    );
                 }
             DB::commit();
         } catch (Exception $e) {

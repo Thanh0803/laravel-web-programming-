@@ -3,23 +3,21 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Grade;
-use Faker\Generator as Faker;
 
-class GradeFactory extends Factory
+class AssignFactory extends Factory
 {
     /**
      * Define the model's default state.
      *
      * @return array
      */
-    protected $model = Grade::class;
     public function definition()
     {
         return [
             //
-            'gradeName' => $this->faker->text(),
-            'grade' => 10,
+            'teacher_id' => 2,
+            'lop_id' => 1,
+            'subject_id'=>1,
         ];
     }
 }

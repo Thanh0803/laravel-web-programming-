@@ -8,26 +8,22 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class Lop extends Model
+class Assign extends Model
 {
-    use HasFactory, Notifiable;   
+    use HasFactory, Notifiable;
     protected $fillable = [
-        'classname', 'grade_id', 'teacher_id','assign_id'
+        'assign_id','lop_id', 'subject_id'
     ];
-    public function divisions()
+    public function subject()
     {
-        return $this->hasMany('App\Models\Division');
+        return $this->belongsTo('App\Models\Subject');
     }
-    public function grade()
+    public function lop()
     {
-        return $this->belongsTo('App\Models\Grade');
+        return $this->belongsTo('App\Models\Lop');
     }
     public function teacher()
     {
         return $this->belongsTo('App\Models\Teacher');
-    }
-    public function assigns()
-    {
-        return $this->hasMany('App\Models\Assign');
     }
 }

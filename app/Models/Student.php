@@ -13,7 +13,7 @@ class Student extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
     protected $fillable = [
-        'account_id', 
+        'account_id', 'conduct_id'
     ];
     public function account()
     {
@@ -26,5 +26,9 @@ class Student extends Authenticatable
     public function divisions()
     {
         return $this->hasMany('App\Models\Division');
+    }
+    public function conducts()
+    {
+        return $this->hasMany('App\Models\Conduct');
     }
 }

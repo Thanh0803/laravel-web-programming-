@@ -8,11 +8,18 @@ use App\Http\Resources\StudentResource;
 use App\Http\Resources\GradeCollection;
 use App\Http\Resources\GradeResource;
 use App\Http\Resources\LopCollection;
+use App\Http\Resources\StudentListCollection;
+use App\Http\Resources\DivisionCollection;
+use App\Http\Resources\SubjectCollection;
+use App\Http\Resources\AssignCollection;
 
 use App\Models\Student;
+use App\Models\Subject;
+use App\Models\Assign;
 use App\Models\Lop;
 use App\Models\Teacher;
 use App\Models\Grade;
+use App\Models\Division;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -26,28 +33,49 @@ class ClassManageController extends Controller
     public function getAllClassinGrade($id)
     {
         if (Grade::where('id', $id)->exists()) {
-            // $achievement = Achievement::where('classSubject_id',$classSubject_id)->where('student_id',$student)->get()[0];
             return new GradeCollection(Grade::where('id',$id)->paginate(10));
         } else {
             return response()->json([
                 "message" => "Grade not found"
             ], 404);
         }
-        // return new GradeCollection(Grade::all());
     }
-    public function getClass($id, $lop_id)
+    public function getClass($id)
     {
         if (Grade::where('id', $id)->exists()) {
             $lops = Lop::where('grade_id', '=', $id)->paginate(15);
-            foreach ($lops as $lop){
-                $lop -> gradeObj = $lop_id;
-            }
             return new LopCollection($lops);
         } else {
             return response()->json([
                 "message" => "Grade not found"
             ], 404);
         }
+    }
+    public function getAllStudent($id)
+    {
+        if (Lop::where('id', $id)->exists()) {
+            $lop = Lop::find($id);
+            return new DivisionCollection(Division::where('lop_id', '=', $id)->paginate(15));
+        } else {
+            return response()->json([
+                "message" => "Class not found"
+            ], 404);
+        }
+    }
+    public function getAllTeacher($id)
+    {
+        if (Subject::where('id', $id)->exists()) {
+            $subject = Subject::find($id);
+            return new AssignCollection(Assign::where('subject_id', '=', $id)->paginate(15));
+        } else {
+            return response()->json([
+                "message" => "Subject not found"
+            ], 404);
+        }
+    }
+    public function getAllSubject()
+    {
+        return new SubjectCollection(Subject::all());
     }
     public function upload(Request $request){
         //
