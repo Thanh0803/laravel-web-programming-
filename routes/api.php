@@ -55,7 +55,7 @@ Route::middleware(['auth:admin','adminTokenValidate'])->group(function () {
     Route::delete('/admin/teacher/{id}','AccountManage\TeacherManageController@delete');
     Route::get('/admin/teacher/{id}','AccountManage\TeacherManageController@show');
     // Route::post('/admin/teacher/multidelete', 'AccountManage\TeacherManageController@multiDelete');
-    Route::put('/admin/teacher/upload/{id}','AccountManage\TeacherManageController@upload');
+    Route::post('/admin/teacher/upload/{id}/','AccountManage\TeacherManageController@upload');
 
     //-------------------------------------------------------------------------- Student
 //    Route::get('/teacher','TeacherManageController@index');
@@ -72,8 +72,8 @@ Route::middleware(['auth:admin','adminTokenValidate'])->group(function () {
     //--------------------------------------------------------------------------Class $ Grade $student
     Route::get('/admin/grade/getall/','AccountManage\ClassManageController@getAllGrade');
     Route::get('/admin/grade/{id}/','AccountManage\ClassManageController@getClass'); 
-    Route::get('/admin/class/in/grade/getall/{id}/','AccountManage\ClassManageController@getAllClassinGrade');
-    Route::post('/admin/class/upload/{id}','AccountManage\ClassManageController@upload');
+    // Route::get('/admin/class/in/grade/getall/{id}/','AccountManage\ClassManageController@getAllClassinGrade');
+    Route::post('/admin/class/upload/{id}','AccountManage\ClassManageController@store');
     Route::delete('/admin/class/delete/{id}','AccountManage\ClassManageController@delete');
 
     Route::get('/admin/class/{id}/','AccountManage\ClassManageController@getAllStudent');

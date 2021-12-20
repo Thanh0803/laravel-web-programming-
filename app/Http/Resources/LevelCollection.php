@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class LopCollection extends ResourceCollection
+class LevelCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -14,15 +14,13 @@ class LopCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        // return parent::toArray($request);
         return [
-            'data' => $this->collection->map(function ($lop){
+            // return parent::toArray($request);
+            'data' => $this->collection->map(function ($level){
                 return [
-                    'id' => $lop->id,
-                    'className' => $lop->className,
-                    // 'teacher_id' => $lop->teacher_id,
-                    'headTeacher' => $lop->teacher->fullname,
-                    'schoolYear' =>  $lop->schoolYear,
+                    'id' => $level->id,
+                    'teacher' => new TeacherResource($level->teacher),
+                    'subject_id' => $level->subject_id,
                 ];
             }),
             'links' => [

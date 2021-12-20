@@ -23,4 +23,8 @@ class Subject extends Model
     {
         return $this->hasMany('App\Models\Mark');
     }
+    public function levels()
+    {
+        return $this->hasMany('App\Models\Level');
+    }
 }

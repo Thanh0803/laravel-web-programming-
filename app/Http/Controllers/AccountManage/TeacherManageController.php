@@ -9,6 +9,7 @@ use App\Http\Resources\TeacherResource;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\Account;
+use App\Models\Level;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -23,14 +24,8 @@ class TeacherManageController extends Controller
      */
     public function getAllUser()
     {
-        //
-//        return UserResource::collection(User::all());
-//       return User::paginate();
+
         return new TeacherCollection(Teacher::paginate(10));
-//        return response()->json([
-//            "" => "records updated successfully"
-//        ], 200);
-////        return User::all();
     }
     public function getTotalTeacher(){
         return Teacher::count();
@@ -133,7 +128,7 @@ class TeacherManageController extends Controller
             ], 404);
         }
     }
-    public function upload(Request $request){
+    public function upload(Request $request, int $id){
         $teachers = $request->data;
        
         $count = 0;
@@ -161,6 +156,12 @@ class TeacherManageController extends Controller
             $input->phone =$teacher['phone'];
             $input->save();
             $input->touch();
+            $level = Level::create(
+                [
+                    'teacher_id' => $input->id,
+                    'subject_id' => $id,
+                ]
+            );
             $count++;
             }
             DB::commit();

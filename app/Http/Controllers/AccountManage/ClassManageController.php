@@ -12,8 +12,11 @@ use App\Http\Resources\StudentListCollection;
 use App\Http\Resources\DivisionCollection;
 use App\Http\Resources\SubjectCollection;
 use App\Http\Resources\AssignCollection;
+use App\Http\Resources\LevelCollection;
+use App\Http\Resources\LopResource;
 
 use App\Models\Student;
+use App\Models\Level;
 use App\Models\Subject;
 use App\Models\Assign;
 use App\Models\Lop;
@@ -66,7 +69,7 @@ class ClassManageController extends Controller
     {
         if (Subject::where('id', $id)->exists()) {
             $subject = Subject::find($id);
-            return new AssignCollection(Assign::where('subject_id', '=', $id)->paginate(15));
+            return new LevelCollection(Level::where('subject_id', '=', $id)->paginate(15));
         } else {
             return response()->json([
                 "message" => "Subject not found"
@@ -77,40 +80,27 @@ class ClassManageController extends Controller
     {
         return new SubjectCollection(Subject::all());
     }
-    public function upload(Request $request){
-        //
-                $lops = $request->data;
-                $count = 0;
-                DB::beginTransaction();
-                try {
-                    foreach ($lops as $lop) {
-                            $input = Lop::create(
-                                [
-                                    'className' => $lop['className'],
-                                    'grade_id' => $lop['grade_id'],
-                                    'teacher_id' => $lop['teacher_id'],
-                                ]
-                            );
-                            $input->academicYear =$lop['academicYear'];
-                            $input->schoolYear =$lop['schoolYear'];
-                            $input->save();
-                            $input->touch();
-                        }
-                    DB::commit();
-                } catch (Exception $e) {
-                    DB::rollBack();
-        
-                    throw new Exception($e->getMessage());
-        
-                }
-                return response()->json([
-                    "message" => "Created success",
-                    "count" => $count,
-        //            "class" => count($class)
-                ]);
-        
-        
-            }
+    public function store(Request $request, int $id)
+    {
+        $lop = Lop::create([
+            'teacher_id'=>$request->teacher_id,
+            'className'=>$request->className,
+            'grade_id'=>$id,
+
+        ]);
+        $lop->academicYear =$request->academicYear;
+        $lop->schoolYear =$request->schoolYear;
+        $lop->save();
+        return response()->json([
+            'status_code' => 200,
+            'message' => "Class created successfully.",
+            'data' => [
+//                "class"=>$request->teacher_id,
+                "class"=> new LopResource($lop),
+
+            ],
+        ]);
+    }
     public function delete($id)
     {
         //

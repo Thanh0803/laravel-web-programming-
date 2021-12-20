@@ -31,4 +31,8 @@ class Teacher extends Authenticatable
     {
         return $this->hasMany('App\Models\Assign');
     }
+    public function levels()
+    {
+        return $this->hasMany('App\Models\Level');
+    }
 }

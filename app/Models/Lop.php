@@ -12,7 +12,7 @@ class Lop extends Model
 {
     use HasFactory, Notifiable;   
     protected $fillable = [
-        'classname', 'grade_id', 'teacher_id','assign_id'
+        'className', 'grade_id', 'teacher_id','assign_id'
     ];
     public function divisions()
     {
