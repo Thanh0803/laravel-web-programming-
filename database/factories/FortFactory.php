@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ConductFactory extends Factory
+class FortFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -15,11 +15,7 @@ class ConductFactory extends Factory
     {
         return [
             //
-            'student_id' =>2,
-            'mark' => $this->faker->text(),
-            'comment' => $this->faker->text(),
-            'semester' => 1,
+            'type_id' =>2
         ];
     }
-    
 }

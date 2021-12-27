@@ -21,8 +21,10 @@ class AssignCollection extends ResourceCollection
                 return [
                     'id' => $assign->id,
                     'teacher' => new TeacherResource($assign->teacher),
-                    'lop_id' =>$assign->lop_id,
-                    'subject_id' => $assign->subject_id,
+                    'className' =>$assign->lop->className,
+                    'schoolYear' =>$assign->lop->schoolYear,
+                    'subjectName' => $assign->subject->subjectName,
+                    'semester' => $assign->semester,
                 ];
             }),
             'links' => [

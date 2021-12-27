@@ -3,10 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use App\Http\Resources\StudentResource;
-use App\Http\Resources\TypeResource;
 
-class DivisionCollection extends ResourceCollection
+class ConductdetailCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -17,14 +15,14 @@ class DivisionCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            // return parent::toArray($request);
-            'data' => $this->collection->map(function ($divison){
+            'data' => $this->collection->map(function ($division){
                 return [
-                    'id' => $divison->id,
-                    'student' => new StudentResource($divison->student),
-                    'lop_id' =>$divison->lop_id,
-                    'type' => new TypeResource($divison->type),
-            
+                    'id' => $division->id,
+                    'mark' => $division->student->conduct->mark,
+                    'comment' => $division->student->conduct->comment,
+                    'semester' =>  $division->student->conduct->semester,
+                    'schoolYear' =>  $division->student->conduct->schoolYear,
+                    'fullname' => $division->student->fullname,
                 ];
             }),
             'links' => [

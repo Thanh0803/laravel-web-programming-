@@ -183,20 +183,20 @@ class TeacherManageController extends Controller
         DB::table("teachers")->whereIn('id',explode(",",$ids))->delete();
         return response()->json(["message" => "Teacher deleted"]);
     }
-    public function teacherStatus($id){
-        if (Teacher::where('id', $id)->exists()) {
-            $user = User::find($id);
-            $classes = Lophoc::where('teacher_id',$id)->get();
-//            $class = Lophoc::find()
-            $assign = ClassSubject::where('teacher_id',$id)->where('isActive',1)->get();
-            return response()->json([
-                "classByKeyTeacher" => $classes,
-                "classTeach" => new AssignCollection($assign),
-            ],200);
-        } else {
-            return response()->json([
-                "message" => "User not found"
-            ], 404);
-        }
-    }
+//     public function teacherStatus($id){
+//         if (Teacher::where('id', $id)->exists()) {
+//             $user = User::find($id);
+//             $classes = Lophoc::where('teacher_id',$id)->get();
+// //            $class = Lophoc::find()
+//             $assign = ClassSubject::where('teacher_id',$id)->where('isActive',1)->get();
+//             return response()->json([
+//                 "classByKeyTeacher" => $classes,
+//                 "classTeach" => new AssignCollection($assign),
+//             ],200);
+//         } else {
+//             return response()->json([
+//                 "message" => "User not found"
+//             ], 404);
+//         }
+//     }
 }

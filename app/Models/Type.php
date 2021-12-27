@@ -10,10 +10,26 @@ class Type extends Model
 {
     use HasFactory, Notifiable;
     protected $fillable = [
-        'markName', 'markWeight'
+        'subject_id'
     ];
-    public function marks()
+    public function divisions()
     {
-        return $this->hasMany('App\Models\Mark');
+        return $this->hasMany('App\Models\Division');
+    }
+    public function fifs()
+    {
+        return $this->hasMany('App\Models\Fif');
+    }
+    public function forts()
+    {
+        return $this->hasMany('App\Models\Fort');
+    }
+    public function nines()
+    {
+        return $this->hasMany('App\Models\Nine');
+    }
+    public function subject()
+    {
+        return $this->belongsTo('App\Models\Subject');
     }
 }

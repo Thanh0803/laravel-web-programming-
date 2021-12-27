@@ -14,8 +14,7 @@ class TypeFactory extends Factory
     public function definition()
     {
         return [
-            'markName' => $this->faker->text(),
-            'markWeight' => 1,
+            'subject_id' =>1
         ];
     }
 }

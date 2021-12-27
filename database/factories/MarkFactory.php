@@ -15,7 +15,6 @@ class MarkFactory extends Factory
     {
         return [
             //
-            'student_id' => 1,
             'type_id' =>1,
             'subject_id' => 1,
             'mark' => 9,

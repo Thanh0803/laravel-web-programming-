@@ -16,6 +16,7 @@ class DivisionFactory extends Factory
         return [
             'student_id' => 2,
             'lop_id' =>1,
+            'type_id' =>2
         ];
     }
 }

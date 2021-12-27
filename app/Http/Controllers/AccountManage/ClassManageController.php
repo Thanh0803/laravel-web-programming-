@@ -36,7 +36,7 @@ class ClassManageController extends Controller
     public function getAllClassinGrade($id)
     {
         if (Grade::where('id', $id)->exists()) {
-            return new GradeCollection(Grade::where('id',$id)->paginate(10));
+            return new GradeCollection(Grade::where('id',$id)->all());
         } else {
             return response()->json([
                 "message" => "Grade not found"
@@ -116,5 +116,9 @@ class ClassManageController extends Controller
                 "message" => "Class not found"
             ], 404);
         }
+    }
+    public function getAllAssign()
+    {
+        return new AssignCollection(Assign::paginate(15));
     }
 }

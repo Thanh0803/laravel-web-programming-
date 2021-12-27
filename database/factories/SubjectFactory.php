@@ -17,7 +17,7 @@ class SubjectFactory extends Factory
             //
             'subjectName' => $this->faker->text(),
             'grade' => 10,
-            'subjectWeight' => 2,
+            'subjectWeight' => 1,
         ];
     }
 }

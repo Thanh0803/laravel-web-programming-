@@ -13,15 +13,15 @@ class Subject extends Model
 {
     use HasFactory, Notifiable;
     protected $fillable = [
-        'subjectName', 'grade', 'subjectWeight', 'assign_id', 'mark_id'
+        'subjectName', 'grade', 'subjectWeight', 'assign_id', 
     ];
     public function assigns()
     {
         return $this->hasMany('App\Models\Assign');
     }
-    public function marks()
+    public function types()
     {
-        return $this->hasMany('App\Models\Mark');
+        return $this->hasMany('App\Models\Type');
     }
     public function levels()
     {

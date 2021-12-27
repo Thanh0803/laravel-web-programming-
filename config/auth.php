@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'users',
+        'passwords' => 'teacher',
     ],
 
     /*
@@ -38,7 +38,7 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'teachers',
         ],
         'teacher' => [
             'driver' => 'passport',
@@ -74,9 +74,9 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'teachers' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\Teacher::class,
         ],
         'admins' => [
             'driver' => 'eloquent',
@@ -86,10 +86,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Student::class,
         ],
-        'phuhuynhs' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Phuhuynh::class,
-        ],
+        // 'teachers' => [
+        //     'driver' => 'eloquent',
+        //     'model' => App\Models\Teacher::class,
+        // ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
@@ -112,8 +112,8 @@ return [
     */
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
+        'teacher' => [
+            'provider' => 'teachers',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,

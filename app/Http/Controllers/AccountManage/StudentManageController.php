@@ -21,25 +21,8 @@ class StudentManageController extends Controller
 {
     public function getAllStudent()
     {
-        //
-//        return StudentResource::collection(Student::all());
         return new StudentCollection(Student::paginate(10));
-//        return User::all();
     }
-    // public function getTotalStudent(){
-    //     return Student::count();
-    // }
-   
-//     public function store(Request $request)
-//     {
-//         $student = Student::create([
-//             'email' => $request->email,
-//             'name' => $request->name,
-//             'password' => bcrypt($request->password),
-
-//         ]);
-//         return new StudentResource($student);
-//     }
 
     /**
      * Display the specified resource.
@@ -90,7 +73,7 @@ class StudentManageController extends Controller
             $student->touch();
             return response()->json([
                 "message" => "Student updated successfully",
-                // "student"=> new StudentResource($student),
+                "student"=> $request,
                 // "date" => $birthday
             ], 200);
         } else {
@@ -204,41 +187,6 @@ class StudentManageController extends Controller
             "student"=> $student,
             "count" => $student->count()
         ], 200);
-    }
-    public function studentWithSubjectScore(){
-
-    }
-    public function countByMonth()
-    {
-        $users = Student::select('id', 'created_at')
-            ->get()
-            ->groupBy(function($date) {
-                //return Carbon::parse($date->created_at)->format('Y'); // grouping by years
-                return Carbon::parse($date->created_at)->format('m'); // grouping by months
-            });
-
-        $usermcount = [];
-        $userArr = [];
-        $month = [
-            'No','Jan','Feb','Mar','Apr','May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-        ];
-        foreach ($users as $key => $value) {
-            $usermcount[(int)$key] = count($value);
-        }
-
-        for($i = 1; $i <= 12; $i++){
-            if(!empty($usermcount[$i])){
-
-                $userArr[$i] = $usermcount[$i];
-            }else{
-                $userArr[$i] = 0;
-            }
-        }
-        return response()->json([
-//            "data" => $usermcount,
-            "data_hi" => $userArr
-        ], 200);
-
     }
 
 }

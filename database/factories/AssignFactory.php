@@ -15,7 +15,7 @@ class AssignFactory extends Factory
     {
         return [
             //
-            'teacher_id' => 2,
+            'teacher_id' => 1,
             'lop_id' => 1,
             'subject_id'=>1,
         ];

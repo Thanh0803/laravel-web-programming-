@@ -12,7 +12,7 @@ class Assign extends Model
 {
     use HasFactory, Notifiable;
     protected $fillable = [
-        'assign_id','lop_id', 'subject_id'
+        'teacher_id','lop_id', 'subject_id'
     ];
     public function subject()
     {

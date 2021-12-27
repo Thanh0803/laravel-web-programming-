@@ -12,7 +12,7 @@ class Division extends Model
 {
     use HasFactory, Notifiable;
     protected $fillable = [
-        'student_id','lop_id'
+        'student_id','lop_id', 'type_id'
     ];
     public function student()
     {
@@ -22,4 +22,9 @@ class Division extends Model
     {
         return $this->belongsTo('App\Models\Lop');
     }
+    public function type()
+    {
+        return $this->belongsTo('App\Models\Type');
+    }
+    
 }

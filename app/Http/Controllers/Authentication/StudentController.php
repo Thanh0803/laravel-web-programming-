@@ -19,7 +19,7 @@ class StudentController extends Controller
                 'username'=>$request->username,
                 'email'=>$request->email,
                 'password'=>bcrypt($request->password),
-                'role' => 1
+                'role' => 2
             ]);
             if($info->id){
                 $student = Student::create([

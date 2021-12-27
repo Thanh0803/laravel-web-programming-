@@ -3,20 +3,6 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
 
 Route::post('/admin/login','Authentication\AdminController@login');
 Route::post('/admin/register','Authentication\AdminController@register');
@@ -31,16 +17,9 @@ Route::middleware(['auth:teacher','teacherTokenValidate'])->group(function () {
     Route::get('/teacher/logout','Authentication\TeacherController@logout');
 });
 
-Route::post('/student/login','Authentication\StudentController@login');
 Route::post('/student/register','Authentication\StudentController@register');
 Route::middleware(['auth:student','studentTokenValidate'])->group(function () {
     Route::get('/student/logout','Authentication\StudentController@logout');
-});
-
-Route::post('/parent/login','Authentication\PhuhuynhController@login');
-Route::post('/parent/register','Authentication\PhuhuynhController@register');
-Route::middleware(['auth:phuhuynh','phuhuynhTokenValidate'])->group(function () {
-    Route::get('/parent/logout','Authentication\PhuhuynhController@logout');
 });
 
 Route::post('/system/login','Authentication\LoginController@login');
@@ -81,5 +60,22 @@ Route::middleware(['auth:admin','adminTokenValidate'])->group(function () {
     //--------------------------------------------------------------------------Class $ Grade $student
     Route::get('/admin/subject/getall/','AccountManage\ClassManageController@getAllSubject');
     Route::get('/admin/teacher/subject/getall/{id}/','AccountManage\ClassManageController@getAllTeacher'); // get all teacher in a subject
+    //--------------------------------------------------------------------------teacher assignment
+    Route::get('/admin/assign/teacher/','AccountManage\ClassManageController@getAllAssign');
+    Route::get('/admin/assign/teacher/getall','AccountManage\ClassManageController@getAllAssign');
+});
+
+//--------------------------------------------------------------------------Mark
+Route::middleware(['auth:teacher','teacherTokenValidate'])->group(function (){
+    Route::get('/teacher/class/subject/getall/{id}','MarkManagement\MarkManageController@getSubjectClass');
+    Route::get('/teacher/class/subject/detail/{id}','MarkManagement\MarkManageController@getmarkDetail'); // id: Lop
+    Route::get('/head/teacher/class/{id}','MarkManagement\MarkManageController@Getclass'); //id: ID cua giao vien khi dang nhap
+    Route::get('/head/teacher/mark/','MarkManagement\MarkManageController@GetAlllMark'); // tra ve diem hoc sinh
+    Route::get('/teacher/conduct/{id}','MarkManagement\MarkManageController@GetConduct'); //id: Id cua lop hoc
+    Route::get('/teacher/conduct/detail/{id}','MarkManagement\MarkManageController@getConductDetail');
+    Route::put('/teacher/conduct/update/{id}','MarkManagement\MarkManageController@updateConduct');
+    Route::get('/teacher/mark/detail/{id}','MarkManagement\MarkManageController@showMark');
+    Route::put('/teacher/mark/update/{id}','MarkManagement\MarkManageController@updateMark'); //ID: type
+    Route::get('/head/teacher/type/{id}','MarkManagement\MarkManageController@GetMark');
 
 });
