@@ -15,7 +15,7 @@ class ConductFactory extends Factory
     {
         return [
             //
-            'student_id' =>2,
+            'student_id' =>1,
             'mark' => $this->faker->text(),
             'comment' => $this->faker->text(),
             'semester' => 1,

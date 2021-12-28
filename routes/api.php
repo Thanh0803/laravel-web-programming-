@@ -37,8 +37,7 @@ Route::middleware(['auth:admin','adminTokenValidate'])->group(function () {
     Route::post('/admin/teacher/upload/{id}/','AccountManage\TeacherManageController@upload');
 
     //-------------------------------------------------------------------------- Student
-//    Route::get('/teacher','TeacherManageController@index');
-    // Route::get('/student','AccountManage\StudentManageController@getTotalStudent');
+
     Route::get('/admin/student/getall/','AccountManage\StudentManageController@getAllStudent');
     // Route::post('/student','AccountManage\StudentManageController@store');
     Route::put('/admin/student/update/{id}','AccountManage\StudentManageController@update');
@@ -51,7 +50,6 @@ Route::middleware(['auth:admin','adminTokenValidate'])->group(function () {
     //--------------------------------------------------------------------------Class $ Grade $student
     Route::get('/admin/grade/getall/','AccountManage\ClassManageController@getAllGrade');
     Route::get('/admin/grade/{id}/','AccountManage\ClassManageController@getClass'); 
-    // Route::get('/admin/class/in/grade/getall/{id}/','AccountManage\ClassManageController@getAllClassinGrade');
     Route::post('/admin/class/upload/{id}','AccountManage\ClassManageController@store');
     Route::delete('/admin/class/delete/{id}','AccountManage\ClassManageController@delete');
 

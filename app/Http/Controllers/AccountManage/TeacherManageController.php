@@ -5,7 +5,9 @@ namespace App\Http\Controllers\AccountManage;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\TeacherCollection;
+use App\Http\Resources\LevelCollection;
 use App\Http\Resources\TeacherResource;
+use App\Http\Resources\TeacherdetailResource;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\Account;
@@ -55,9 +57,9 @@ class TeacherManageController extends Controller
      */
     public function show($id)
     {
-        if (Teacher::where('id', $id)->exists()) {
-            $teacher = Teacher::find($id);
-            return new TeacherResource($teacher);
+        if (Level::where('id', $id)->exists()) {
+            $level = Level::find($id);
+            return new TeacherdetailResource($level);
         } else {
             return response()->json([
                 "message" => "Teacher not found"
@@ -115,12 +117,13 @@ class TeacherManageController extends Controller
     public function delete($id)
     {
         //
-        if(Teacher::where('id', $id)->exists()) {
-            $teacher = Teacher::find($id);
-            $teacher->delete();
+        if(Level::where('id', $id)->exists()) {
+            $level = Level::find($id);
+            $level->delete();
+            // $teacher->delete();
 
             return response()->json([
-                "message" => "records deleted"
+                "message" => "records deleted",
             ], 202);
         } else {
             return response()->json([

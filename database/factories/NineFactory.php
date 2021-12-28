@@ -15,7 +15,7 @@ class NineFactory extends Factory
     {
         return [
             //
-            'type_id' =>2
+            'type_id' =>1
         ];
     }
 }

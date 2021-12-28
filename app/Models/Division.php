@@ -12,7 +12,7 @@ class Division extends Model
 {
     use HasFactory, Notifiable;
     protected $fillable = [
-        'student_id','lop_id', 'type_id'
+        'student_id','lop_id',
     ];
     public function student()
     {

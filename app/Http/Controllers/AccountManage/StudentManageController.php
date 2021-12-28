@@ -32,9 +32,9 @@ class StudentManageController extends Controller
      */
     public function show($id)
     {
-        if (Student::where('id', $id)->exists()) {
-            $student = Student::find($id);
-            return new StudentResource($student);
+        if (Division::where('id', $id)->exists()) {
+            $division = Division::find($id);
+            return new StudentResource($division->student);
         } else {
             return response()->json([
                 "message" => "Student not found"
@@ -94,9 +94,11 @@ class StudentManageController extends Controller
     public function delete($id)
     {
         //
-        if(Student::where('id', $id)->exists()) {
-            $student = Student::find($id);
-            $student->delete();
+        if(Division::where('id', $id)->exists()) {
+            $division = Division::find($id);
+            $division->delete();
+            $division->student->delete();
+            $division->student->account->delete();
 
             return response()->json([
                 "message" => "Student deleted"
@@ -111,10 +113,6 @@ class StudentManageController extends Controller
 //
         $students = $request->data;
         $count = 0;
-//        foreach ($students as $student) {
-//            $class = Lophoc::where("classname",$student['classname'])->where("school",$student['school'])->get();
-//        }
-
         DB::beginTransaction();
         try {
             foreach ($students as $student) {

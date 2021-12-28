@@ -9,7 +9,7 @@ use App\Http\Resources\GradeCollection;
 use App\Http\Resources\GradeResource;
 use App\Http\Resources\LopCollection;
 use App\Http\Resources\StudentListCollection;
-use App\Http\Resources\DivisionCollection;
+use App\Http\Resources\DivisionnotypeCollection;
 use App\Http\Resources\SubjectCollection;
 use App\Http\Resources\AssignCollection;
 use App\Http\Resources\LevelCollection;
@@ -58,7 +58,7 @@ class ClassManageController extends Controller
     {
         if (Lop::where('id', $id)->exists()) {
             $lop = Lop::find($id);
-            return new DivisionCollection(Division::where('lop_id', '=', $id)->paginate(15));
+            return new DivisionnotypeCollection(Division::where('lop_id', '=', $id)->paginate(15));
         } else {
             return response()->json([
                 "message" => "Class not found"
