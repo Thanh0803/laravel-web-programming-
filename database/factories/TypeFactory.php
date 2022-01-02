@@ -14,7 +14,8 @@ class TypeFactory extends Factory
     public function definition()
     {
         return [
-            'subject_id' =>1
+            'subject_id' =>2,
+            'division_id' =>1
         ];
     }
 }

@@ -23,8 +23,9 @@ class TypeCollection extends ResourceCollection
             'data' => $this->collection->map(function ($type){
                 return [
                     'id' => $type->id,
-                    // 'student' => $type->division->student,
+                    'student' => $type->division->student,
                     'subject' => $type->subject,
+                    'semester' => $type->semester,
                     'fif' => $type->fifs,
                     'fort' => $type->forts,
                     'nine' => $type->nines,

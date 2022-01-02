@@ -120,7 +120,8 @@ class TeacherManageController extends Controller
         if(Level::where('id', $id)->exists()) {
             $level = Level::find($id);
             $level->delete();
-            // $teacher->delete();
+            $level->teacher->delete();
+            $level->teacher->account->delete();
 
             return response()->json([
                 "message" => "records deleted",

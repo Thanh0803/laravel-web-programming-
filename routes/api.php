@@ -60,7 +60,8 @@ Route::middleware(['auth:admin','adminTokenValidate'])->group(function () {
     Route::get('/admin/teacher/subject/getall/{id}/','AccountManage\ClassManageController@getAllTeacher'); // get all teacher in a subject
     //--------------------------------------------------------------------------teacher assignment
     Route::get('/admin/assign/teacher/','AccountManage\ClassManageController@getAllAssign');
-    Route::get('/admin/assign/teacher/getall','AccountManage\ClassManageController@getAllAssign');
+    Route::get('/admin/assign/teacher/detail/{id}','AccountManage\ClassManageController@getAssignDetail');
+    Route::put('/admin/assign/teacher/update/{id}','AccountManage\ClassManageController@updateAssign');
 });
 
 //--------------------------------------------------------------------------Mark
@@ -76,4 +77,9 @@ Route::middleware(['auth:teacher','teacherTokenValidate'])->group(function (){
     Route::put('/teacher/mark/update/{id}','MarkManagement\MarkManageController@updateMark'); //ID: type
     Route::get('/head/teacher/type/{id}','MarkManagement\MarkManageController@GetMark');
 
+});
+Route::middleware(['auth:student','studentTokenValidate'])->group(function (){
+    Route::get('/student/class/getall/{id}','AccountManage\ClassManageController@getClassStudent');
+    Route::get('/student/mark/getall/{id}','AccountManage\ClassManageController@getMarkStudent');
+    Route::get('/student/conduct/getall/{id}','AccountManage\ClassManageController@getConductStudent');
 });

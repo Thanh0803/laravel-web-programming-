@@ -14,8 +14,13 @@ use App\Http\Resources\SubjectCollection;
 use App\Http\Resources\AssignCollection;
 use App\Http\Resources\LevelCollection;
 use App\Http\Resources\LopResource;
+use App\Http\Resources\DivisionStudentCollection;
+use App\Http\Resources\TypeCollection;
+use App\Http\Resources\ConductStudentCollection;
 
 use App\Models\Student;
+use App\Models\Type;
+use App\Models\Conduct;
 use App\Models\Level;
 use App\Models\Subject;
 use App\Models\Assign;
@@ -120,5 +125,77 @@ class ClassManageController extends Controller
     public function getAllAssign()
     {
         return new AssignCollection(Assign::paginate(15));
+    }
+    public function updateAssign(Request $request, int $id)
+    {
+        //
+        if (Assign::where('id', $id)->exists()) {
+            $assign = Assign::find($id);
+            $assign->teacher->fullname = is_null($request->fullname) ? $assign->teacher->fullname : $request->fullname;
+            $assign->lop->className = is_null($request->className) ? $assign->lop->className : $request->className;
+            $assign->semester = is_null($request->semester) ? $assign->semester : $request->semester;
+            $assign->lop->schoolYear = is_null($request->schoolYear) ? $assign->lop->schoolYear : $request->schoolYear;
+            $assign->save();
+            $assign->teacher->save();
+            $assign->lop->save();
+            $assign->touch();
+            $assign->teacher->touch();
+            $assign->lop->touch();
+            return response()->json([
+                "message" => "Student updated successfully",
+                "assign"=> $request,
+                // "date" => $birthday
+            ], 200);
+        } else {
+            return response()->json([
+                "message" => "Student not found"
+            ], 404);
+
+        }
+
+    }
+    public function getAssignDetail($id)
+    {
+        if (Assign::where('id', $id)->exists()) {
+            $assign = Assign::find($id);
+            return new AssignCollection(Assign::where('id', $id)->paginate(15));
+        } else {
+            return response()->json([
+                "message" => "Assign not found"
+            ], 404);
+        }
+    }
+    public function getClassStudent($id)
+    {
+        if (Student::where('id', $id)->exists()) {
+            $student = Student::find($id);
+            return new DivisionStudentCollection(Division::where('student_id','=', $id)->paginate(15));
+        } else {
+            return response()->json([
+                "message" => "Student not found"
+            ], 404);
+        }
+    }
+    public function getMarkStudent($id)
+    {
+        if (Division::where('id', $id)->exists()) {
+            $division = Division::find($id);
+            return new TypeCollection(Type::where('division_id','=', $id)->paginate(15));
+        } else {
+            return response()->json([
+                "message" => "Division not found"
+            ], 404);
+        }
+    }
+    public function getConductStudent($id)
+    {
+        if (Student::where('id', $id)->exists()) {
+            $student = Student::find($id);
+            return new ConductStudentCollection(Conduct::where('student_id','=', $id)->paginate(15));
+        } else {
+            return response()->json([
+                "message" => "Division not found"
+            ], 404);
+        }
     }
 }

@@ -17,6 +17,8 @@ class CreateTypesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('subject_id');
             $table->foreign('subject_id')->references('id')->on('subjects');
+            $table->unsignedBigInteger('division_id');
+            $table->foreign('division_id')->references('id')->on('divisions');
             $table->string('schoolYear')->nullable();
             $table->integer('semester')->nullable();
             $table->timestamps();

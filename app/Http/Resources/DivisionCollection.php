@@ -23,8 +23,7 @@ class DivisionCollection extends ResourceCollection
                     'id' => $divison->id,
                     'student' => new StudentResource($divison->student),
                     'lop_id' =>$divison->lop_id,
-                    'type' => new TypeResource($divison->type),
-            
+                    'type' => $divison->type,
                 ];
             }),
             'links' => [

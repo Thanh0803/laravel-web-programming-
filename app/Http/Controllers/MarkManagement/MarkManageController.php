@@ -41,12 +41,12 @@ class MarkManageController extends Controller
     }
     public function getmarkDetail($id)
     {
-        if (Lop::where('id', $id)->exists()) {
-            $lop = Lop::find($id);
-            return new DivisionCollection(Division::where('lop_id', '=', $id)->paginate(15));
+        if (Subject::where('id', $id)->exists()) {
+            $subject = Subject::find($id);
+            return new TypeCollection(Type::where('subject_id', '=', $id)->paginate(15));
         } else {
             return response()->json([
-                "message" => "Division not found"
+                "message" => "Subject not found"
             ], 404);
         }
     }
@@ -126,17 +126,17 @@ class MarkManageController extends Controller
     public function updateMark(Request $request, int $id)
     {
         
-        if (Division::where('id', $id)->exists()) 
+        if (Type::where('id', $id)->exists()) 
         {
-            $division = Division::find($id);
+            $type = Type::find($id);
 
             $obj_fif = $request->fif;
             $obj_fort = $request->fort;
             $obj_nine = $request->nine;
 
-            $fifs = $division->type->fifs;
-            $forts = $division->type->forts;
-            $nines = $division->type->nines;
+            $fifs = $type->fifs;
+            $forts = $type->forts;
+            $nines = $type->nines;
             
             foreach( $obj_fif as $key => $value )
             {
@@ -171,13 +171,12 @@ class MarkManageController extends Controller
                 }
 
             }
-            $fifs->save();
-            $forts->save();
-            $nines->save();
             return response()->json([
-                'fif' => $fifs,
-                'fif' => $forts,
-                'fif' => $nines,
+                // 'request' => $request,
+                'obj_fif' => $obj_fif,
+                // 'fif' => $fifs,
+                // 'fif' => $forts,
+                // 'fif' => $nines,
                 ], 200);
         } else {
             return response()->json([

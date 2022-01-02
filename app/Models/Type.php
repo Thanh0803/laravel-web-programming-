@@ -10,11 +10,11 @@ class Type extends Model
 {
     use HasFactory, Notifiable;
     protected $fillable = [
-        'subject_id'
+        'subject_id', 'division_id'
     ];
-    public function divisions()
+    public function division()
     {
-        return $this->hasMany('App\Models\Division');
+        return $this->belongsTo('App\Models\Division');
     }
     public function fifs()
     {

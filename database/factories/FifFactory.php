@@ -15,7 +15,7 @@ class FifFactory extends Factory
     {
         return [
             //
-            'type_id' =>1
+            'type_id' =>3
         ];
     }
 }

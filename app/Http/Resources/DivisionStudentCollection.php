@@ -3,9 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use App\Http\Resources\TeacherResource;
 
-class AssignCollection extends ResourceCollection
+class DivisionStudentCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -17,14 +16,10 @@ class AssignCollection extends ResourceCollection
     {
         return [
             // return parent::toArray($request);
-            'data' => $this->collection->map(function ($assign){
+            'data' => $this->collection->map(function ($division){
                 return [
-                    'id' => $assign->id,
-                    'teacher' => new TeacherResource($assign->teacher),
-                    'lop' =>$assign->lop,
-                    'schoolYear' =>$assign->lop->schoolYear,
-                    'subject' => $assign->subject,
-                    'semester' => $assign->semester,
+                    'id' => $division->id,
+                    'lop' =>$division->lop,            
                 ];
             }),
             'links' => [
