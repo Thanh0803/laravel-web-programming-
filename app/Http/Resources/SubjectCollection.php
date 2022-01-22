@@ -22,6 +22,7 @@ class SubjectCollection extends ResourceCollection
                     'subjectName' => $subject->subjectName,
                     'grade' =>$subject->grade,
                     'subjectWeight' => $subject->subjectWeight,
+                    'types'=>$subject->types,
                 ];
             }),
             'links' => [

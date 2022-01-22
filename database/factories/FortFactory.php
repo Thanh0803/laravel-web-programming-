@@ -15,7 +15,7 @@ class FortFactory extends Factory
     {
         return [
             //
-            'type_id' =>3
+            'type_id' =>25
         ];
     }
 }

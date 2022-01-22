@@ -22,8 +22,8 @@ class DivisionCollection extends ResourceCollection
                 return [
                     'id' => $divison->id,
                     'student' => new StudentResource($divison->student),
-                    'lop_id' =>$divison->lop_id,
-                    'type' => $divison->type,
+                    'lop' =>$divison->lop,
+                    'type' => $divison->types,
                 ];
             }),
             'links' => [

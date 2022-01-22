@@ -23,6 +23,9 @@ class StudentManageController extends Controller
     {
         return new StudentCollection(Student::paginate(10));
     }
+    public function getTotalStudent(){
+        return Student::count();
+    }
 
     /**
      * Display the specified resource.
@@ -30,6 +33,11 @@ class StudentManageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function studentDetail($id)
+    {
+        $student = Student::find($id);
+        return new StudentResource($student);
+    }
     public function show($id)
     {
         if (Division::where('id', $id)->exists()) {
@@ -79,6 +87,27 @@ class StudentManageController extends Controller
         } else {
             return response()->json([
                 "message" => "Student not found"
+            ], 404);
+
+        }
+
+    }
+    public function updatePassword(Request $request, int $id)
+    {
+        //
+        if (Student::where('id', $id)->exists()) {
+            $student = Teacher::find($id);
+            $student->account->password = is_null($request->password) ? $student->account->password : $request->password; 
+
+            $student->save();
+            $student->account->save();
+            return response()->json([
+                "message" => "records updated successfully",
+            
+            ], 200);
+        } else {
+            return response()->json([
+                "message" => "Teacher not found"
             ], 404);
 
         }

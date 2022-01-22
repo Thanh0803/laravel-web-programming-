@@ -22,8 +22,8 @@ class ConductCollection extends ResourceCollection
                 return [
                     'id' => $division->id,
                     'student' => new StudentResource($division->student),
-                    'lop_id' => $division->lop_id,
-                    'conduct' => $division->student->conduct
+                    'lop' => $division->lop,
+                    'conduct' => $division->student->conducts,
                 ];
             }),
             'links' => [

@@ -29,6 +29,7 @@ class TypeCollection extends ResourceCollection
                     'fif' => $type->fifs,
                     'fort' => $type->forts,
                     'nine' => $type->nines,
+                    'lop' => $type->division->lop
                     
                 ];
             }),

@@ -19,7 +19,9 @@ class LopResource extends JsonResource
             'className' =>$this->className,
             'academicYear'=>$this->academicYear,
             'schoolYear'=>$this->schoolYear,
-            'teacher_id'=>$this->teacher_id,
+            'teacher'=>$this->teacher,
+            'grade_id'=>$this->grade_id,
+            'fullname' =>$this->teacher->fullname,
             // 'headTeacher'=> new TeacherResource($this->teacher->id),
         ];
     }

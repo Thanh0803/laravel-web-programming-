@@ -15,8 +15,8 @@ class LopFactory extends Factory
     {
         return [
             //
-            'grade_id' => 1,
-            'teacher_id' => 1,
+            'grade_id' => 3,
+            'teacher_id' => 3,
         ];
     }
 }

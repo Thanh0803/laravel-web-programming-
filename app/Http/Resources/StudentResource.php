@@ -20,6 +20,7 @@ class StudentResource extends JsonResource
             'fullname' => $this->fullname,
             'account' => new AccountResource($this->account),
             'email'=>$this->account->email,
+            'password' =>$this->account->password,
             'username'=>$this->account->username,
             'phone' => $this->phone,
             'gender' =>  $this->gender,

@@ -14,8 +14,8 @@ class DivisionFactory extends Factory
     public function definition()
     {
         return [
-            'student_id' => 2,
-            'lop_id' => 1,
+            'student_id' => 6,
+            'lop_id' => 4,
         ];
     }
 }

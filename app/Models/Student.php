@@ -27,8 +27,8 @@ class Student extends Authenticatable
     {
         return $this->hasMany('App\Models\Division');
     }
-    public function conduct()
+    public function conducts()
     {
-        return $this->hasOne('App\Models\Conduct');
+        return $this->hasMany('App\Models\Conduct');
     }
 }

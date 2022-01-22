@@ -39,11 +39,11 @@ class MarkManageController extends Controller
             ], 404);
         }
     }
-    public function getmarkDetail($id)
+    public function getmarkDetail($semester, $id)
     {
         if (Subject::where('id', $id)->exists()) {
             $subject = Subject::find($id);
-            return new TypeCollection(Type::where('subject_id', '=', $id)->paginate(15));
+            return new TypeCollection(Type::where('subject_id', '=', $id)->where('semester', '=', $semester)->paginate(15));
         } else {
             return response()->json([
                 "message" => "Subject not found"
@@ -210,4 +210,38 @@ class MarkManageController extends Controller
             ], 404);
         }
     }
+    public function getAllClassfromHead($id)
+    {
+        if (Lop::where('teacher_id', $id)->exists()) {
+            $lop = Lop::find($id);
+            return new LopCollection(Lop::where('teacher_id',$id)->paginate(15));
+        } else {
+            return response()->json([
+                "message" => "Teacher not found"
+            ]);
+        }
+    }
+    public function getAllStudentfromHead($id)
+    {
+        if (Lop::where('id', $id)->exists()) {
+            $lop = Lop::find($id);
+            return new DivisionCollection(Division::where('lop_id',$lop->id)->paginate(15));
+        } else {
+            return response()->json([
+                "message" => "Teacher not found"
+            ], 404);
+        }
+    }
+    public function getAllSubjectfromHead($id)
+    {
+        if (Division::where('id', $id)->exists()) {
+            $division = Division::find($id);
+            return new DivisionCollection(Division::where('id',$id)->paginate(15));
+        } else {
+            return response()->json([
+                "message" => "Teacher not found"
+            ], 404);
+        }
+    }
 }
+

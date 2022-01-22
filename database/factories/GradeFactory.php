@@ -19,7 +19,7 @@ class GradeFactory extends Factory
         return [
             //
             'gradeName' => $this->faker->text(),
-            'grade' => 10,
+            'grade' => 11,
         ];
     }
 }

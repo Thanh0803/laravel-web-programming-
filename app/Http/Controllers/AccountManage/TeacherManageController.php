@@ -5,13 +5,13 @@ namespace App\Http\Controllers\AccountManage;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\TeacherCollection;
-use App\Http\Resources\LevelCollection;
 use App\Http\Resources\TeacherResource;
 use App\Http\Resources\TeacherdetailResource;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\Account;
 use App\Models\Level;
+use App\Models\Assign;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -38,16 +38,11 @@ class TeacherManageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    // public function store(Request $request)
-    // {
-    //     $teacher = Teacher::create([
-    //         'email' => $request->email,
-    //         'name' => $request->name,
-    //         'password' => bcrypt($request->password),
-
-    //     ]);
-    //     return new TeacherResource($teacher);
-    // }
+    public function teacherDetail($id)
+    {
+        $teacher = Teacher::find($id);
+        return new TeacherResource($teacher);
+    }
 
     /**
      * Display the specified resource.
@@ -57,9 +52,9 @@ class TeacherManageController extends Controller
      */
     public function show($id)
     {
-        if (Level::where('id', $id)->exists()) {
-            $level = Level::find($id);
-            return new TeacherdetailResource($level);
+        if (Assign::where('id', $id)->exists()) {
+            $assign = Assign::find($id);
+            return new TeacherdetailResource($assign);
         } else {
             return response()->json([
                 "message" => "Teacher not found"
@@ -82,7 +77,7 @@ class TeacherManageController extends Controller
             $teacher->account->username = is_null($request->username) ? $teacher->account->username : $request->username;
             $teacher->account->email = is_null($request->email) ? $teacher->account->email : $request->email;
             $teacher->fullname = is_null($request->fullname) ? $teacher->fullname : $request->fullname;
-            $teacher->level = is_null($request->level) ? $teacher->level : $request->level;
+            $teacher->assign = is_null($request->assign) ? $teacher->assign : $request->assign;
             $teacher->phone = is_null($request->phone) ? $teacher->phone : $request->phone;
             $teacher->gender = is_null($request->gender) ? $teacher->gender : $request->gender;
             $teacher->account->password = is_null($request->password) ? $teacher->account->password : bcrypt($request->password);
@@ -94,10 +89,7 @@ class TeacherManageController extends Controller
             $teacher->account->save();
             return response()->json([
                 "message" => "records updated successfully",
-                // 'email'=>$teacher->account->email,
-                // 'username'=>$teacher->account->username
-
-                // "teacher"=> $teacher
+            
             ], 200);
         } else {
             return response()->json([
@@ -107,7 +99,27 @@ class TeacherManageController extends Controller
         }
 
     }
+    public function updatePassword(Request $request, int $id)
+    {
+        //
+        if (Teacher::where('id', $id)->exists()) {
+            $teacher = Teacher::find($id);
+            $teacher->account->password = is_null($request->password) ? $teacher->account->password : $request->password; 
 
+            $teacher->save();
+            $teacher->account->save();
+            return response()->json([
+                "message" => "records updated successfully",
+            
+            ], 200);
+        } else {
+            return response()->json([
+                "message" => "Teacher not found"
+            ], 404);
+
+        }
+
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -117,11 +129,11 @@ class TeacherManageController extends Controller
     public function delete($id)
     {
         //
-        if(Level::where('id', $id)->exists()) {
-            $level = Level::find($id);
-            $level->delete();
-            $level->teacher->delete();
-            $level->teacher->account->delete();
+        if(Assign::where('id', $id)->exists()) {
+            $assign = Assign::find($id);
+            $assign->delete();
+            $assign->teacher->delete();
+            $assign->teacher->account->delete();
 
             return response()->json([
                 "message" => "records deleted",
@@ -160,10 +172,11 @@ class TeacherManageController extends Controller
             $input->phone =$teacher['phone'];
             $input->save();
             $input->touch();
-            $level = Level::create(
+            $assign = Assign::create(
                 [
                     'teacher_id' => $input->id,
                     'subject_id' => $id,
+                    'lop_id' => $teacher['lop_id'],
                 ]
             );
             $count++;
@@ -178,7 +191,8 @@ class TeacherManageController extends Controller
         return response()->json([
             "message" => "Created success",
             "Total created" => $count,
-            "Date" => $teacher
+            "teacher" => $teacher,
+            "request"=>$request->data,
             ]);
 
     }
